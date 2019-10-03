@@ -1,6 +1,7 @@
 {
   "name": "musicapp",
   "version": "1.0.0",
+  "tutorial": "https://www.valentinog.com/blog/redux/",
   "description": "",
   "main": "index.js",
   "scripts": {
