@@ -1,38 +1,51 @@
 import React, { Component } from "react";
-import Input from "../presentational/Input.jsx";
-
-
-class FormContainer extends Component {
+import { connect } from "react-redux";
+import uuidv1 from "uuid";
+import { addArticle } from "../actions/index";
+function mapDispatchToProps(dispatch) {
+  return {
+    addArticle: article => dispatch(addArticle(article))
+  };
+}
+class ConnectedForm extends Component {
   constructor() {
     super();
     this.state = {
-      seo_title: ""
+      title: ""
     };
-
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  handleChange() {
+  handleChange(event) {
     this.setState({ [event.target.id]: event.target.value });
-
   }
-
+  handleSubmit(event) {
+    event.preventDefault();
+    const { title } = this.state;
+    const id = uuidv1();
+    this.props.addArticle({ title, id });
+    this.setState({ title: "" });
+  }
   render() {
-    const { seo_title } = this.state;
-
+    const { title } = this.state;
     return (
-      <form id="article-form">
-          <Input
-            text="SEO title"
-            label="seo_title"
+      <form onSubmit={this.handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
             type="text"
-            id="seo_title"
-            value={seo_title}
-            handleChange={this.handleChange}
-        />
+            className="form-control"
+            id="title"
+            value={title}
+            onChange={this.handleChange}
+          />
+        </div>
+        <button type="submit" className="btn btn-success btn-lg">
+          SAVE
+        </button>
       </form>
     );
   }
 }
-export default FormContainer;
-
+const Form = connect(null, mapDispatchToProps)(ConnectedForm);
+export default Form;

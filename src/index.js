@@ -1,6 +1,12 @@
 import React from 'react';
-import ReactDOM from "react-dom";
-import FormContainer from "./js/components/container/FormContainer.jsx";
+import {render} from 'react-dom';
+import {Provider} from 'react-redux';
+import store from './js/store/index';
+import App from './js/components/App.jsx';
 
-const wrapper = document.getElementById("create-article-form");
-wrapper ? ReactDOM.render(<FormContainer />, wrapper) : false;
+render(
+  <Provider store={store}>
+    <App/>
+  </Provider>,
+  document.getElementById("root")
+);
