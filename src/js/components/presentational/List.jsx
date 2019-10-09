@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 const mapStateToProps = state => {
   return { articles: state.articles, name: state.name };
 };
+
 const ConnectedList = ({ articles, name }) => (
   <div>
     <strong>{name}</strong>
