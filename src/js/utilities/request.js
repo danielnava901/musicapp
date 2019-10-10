@@ -10,10 +10,9 @@ export const post = async (url, formData) => {
 
 export const get = async (url, formData) => {
   let response = await fetch(url, {
-        method: "GET",
-        body: formData
+        method: "GET"
     });
   
   let data = await response.json();  
-  return data;
+  return response;
 };
