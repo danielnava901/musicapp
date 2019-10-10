@@ -5,7 +5,7 @@ import {
   LOGIN, REGISTER
 } from '../../../constants/api-routes';
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -19,18 +19,18 @@ class LoginForm extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit(ev) {
+  async handleSubmit(ev) {
     ev.preventDefault();
     console.log(this.state);
     let formData = new FormData();
     formData.append("email", this.state.email);
     formData.append("password", this.state.password);
 
-    post(LOGIN, formData)
-    .then(response => console.log("REs", response));
+    let respi = await post(LOGIN, formData);
+    
   }
 
-  handleRegister(ev) {
+  async handleRegister(ev) {
     ev.preventDefault();
     console.log(this.state);
     let formData = new FormData();
@@ -38,8 +38,8 @@ class LoginForm extends Component {
     formData.append("password", this.state.password);
     formData.append("username", this.state.username);
 
-    post(REGISTER, formData)
-    .then(response => console.log("REs reg", response));
+    let respi = await post(REGISTER, formData);
+    
   }
 
   handleChange(ev) {
@@ -58,6 +58,18 @@ class LoginForm extends Component {
         <form onSubmit={this.handleSubmit} className="row">
           <div className="col col-sm-6 col-sm-offset-3">
             <div className="row">
+              <div className="form-control" className="col col-sm-12">
+                <label htmlFor="username_">Usuario</label>
+                <input
+                  placeholder="Usuario"
+                  type="text"
+                  className="form-control"
+                  name="username"
+                  id="username_"
+                  value={username}
+                  onChange={this.handleChange}
+                />
+              </div>
               <div className="form-control" className="col col-sm-12">  
                 <label htmlFor="email_">Correo</label>
                 <input
@@ -85,16 +97,18 @@ class LoginForm extends Component {
             
             </div>
             <div className="row">
-              <button type="submit" className="button-success col-sm-12">
-                Login
-              </button>
+            <button onClick={this.handleRegister} className="button button-success col-sm-12">
+              Register
+            </button>
             </div>
           </div>
+        
         </form>
+      
       </div>
     )
   }
 }
 
-const Login = connect(null, null)(LoginForm);
-export default Login;
+const Register = connect(null, null)(RegisterForm);
+export default Register;
