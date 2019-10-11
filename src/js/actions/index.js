@@ -1,3 +1,7 @@
+/*
+js/actions/index.js
+*/
+
 import {
     ADD_ARTICLE,
     SET_TOKEN

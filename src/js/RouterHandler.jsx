@@ -1,8 +1,7 @@
 
 import React from "react";
 import {
-  BrowserRouter as Router,
-  HashRouter,
+  HashRouter as Router,
   Switch,
   Route,
   Link
@@ -13,7 +12,7 @@ import Register from "./components/container/RegisterForm/RegisterForm.jsx";
 
 export default function RouterHandler() {
   return (
-    <HashRouter >
+    <Router>
       <div style={{marginTop: 0}}>
         <div className="nav-container">
           <div className="nav-logo">
@@ -33,13 +32,9 @@ export default function RouterHandler() {
       {/* A <Switch> looks through its children <Route>s and
           renders the first one that matches the current URL. */}
       <Switch>
-        <Route exact path="/">
-          <Login />
-        </Route>
-        <Route exact path="/register">
-          <Register />
-        </Route>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/register" component={Register} />
       </Switch>
-    </HashRouter>
+    </Router>
   );
 }
