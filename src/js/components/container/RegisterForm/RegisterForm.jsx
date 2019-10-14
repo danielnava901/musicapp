@@ -27,7 +27,7 @@ class RegisterForm extends Component {
     formData.append("password", this.state.password);
 
     let respi = await post(LOGIN, formData);
-    
+    console.log("resp1:", respi)
   }
 
   async handleRegister(ev) {

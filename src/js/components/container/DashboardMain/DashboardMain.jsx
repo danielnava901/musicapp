@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    token: state.token
+    token: state.user.token
   }
 };
 
@@ -14,11 +14,13 @@ class DashboardMain extends Component {
   }
 
   render() {
-    <div className="row">
-      DASHBOARD {this.props.token}
-    </div> 
+    return (
+      <div className="row">
+        DASHBOARD {this.props.token}
+      </div> 
+    );
   }
 }
 
-let Dashboard = connect(mapStateToProps)(DashboardMain);
+const Dashboard = connect(mapStateToProps, null)(DashboardMain);
 export default Dashboard;

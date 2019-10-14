@@ -14,5 +14,5 @@ export const get = async (url, formData) => {
     });
   
   let data = await response.json();  
-  return response;
+  return data;
 };

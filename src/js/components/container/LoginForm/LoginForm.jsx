@@ -2,44 +2,37 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {post} from '../../../utilities/request';
 import {
-  LOGIN, REGISTER
+  LOGIN
 } from '../../../constants/api-routes';
+import { setToken } from "../../../actions/index";
+
 
 class LoginForm extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       email: '',
-      password: '',
-      username: ''
+      password: ''
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleRegister = this.handleRegister.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit(ev) {
+  async handleSubmit(ev) {
     ev.preventDefault();
-    console.log(this.state);
     let formData = new FormData();
     formData.append("email", this.state.email);
     formData.append("password", this.state.password);
 
-    post(LOGIN, formData)
-    .then(response => console.log("REs", response));
-  }
+    let resp = await post(LOGIN, formData);
+    if(Number(resp.code) === 200) {
+      this.props.setToken(resp.user.token);
+      this.props.history.push("/dashboard");
+    }else {
+      alert(resp.msg);
+    }
 
-  handleRegister(ev) {
-    ev.preventDefault();
-    console.log(this.state);
-    let formData = new FormData();
-    formData.append("email", this.state.email);
-    formData.append("password", this.state.password);
-    formData.append("username", this.state.username);
-
-    post(REGISTER, formData)
-    .then(response => console.log("REs reg", response));
   }
 
   handleChange(ev) {
@@ -50,8 +43,8 @@ class LoginForm extends Component {
   }
 
   render() {
-  
-    let {email, password, username} = this.state;
+
+    let {email, password} = this.state;
 
     return (
       <div className="col col-sm-12">
@@ -96,5 +89,10 @@ class LoginForm extends Component {
   }
 }
 
-const Login = connect(null, null)(LoginForm);
+const  mapDispatchToProps = (dispatch) => {
+  return {
+    setToken: token => dispatch(setToken(token))
+  }
+};
+const Login = connect(null, mapDispatchToProps)(LoginForm);
 export default Login;

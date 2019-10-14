@@ -1,12 +1,24 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
-import store from './js/store/index';
+import configureStore, {history} from './js/store/index';
 import RouterHandler from './js/RouterHandler.jsx';
+import { ConnectedRouter } from 'connected-react-router'
+
+/**
+ * INITIAL STATE APP
+ */
+const initialState = {
+  articles: [],
+  user: {token: null, is_logged: false}
+};
+const store = configureStore(initialState);
 
 render(
   <Provider store={store}>
-    <RouterHandler/>
+    <ConnectedRouter history={history}>
+      <RouterHandler/>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
 );
