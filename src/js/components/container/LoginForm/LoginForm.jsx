@@ -4,7 +4,7 @@ import {post} from '../../../utilities/request';
 import {
   LOGIN
 } from '../../../constants/api-routes';
-import { setToken } from "../../../actions/index";
+import { setToken, loginUser } from "../../../actions/index";
 
 
 class LoginForm extends Component {
@@ -27,7 +27,8 @@ class LoginForm extends Component {
 
     let resp = await post(LOGIN, formData);
     if(Number(resp.code) === 200) {
-      this.props.setToken(resp.user.token);
+      this.props.setToken(resp.jwt);
+      this.props.loginUser(resp.user);
       this.props.history.push("/dashboard");
     }else {
       alert(resp.msg);
@@ -91,7 +92,8 @@ class LoginForm extends Component {
 
 const  mapDispatchToProps = (dispatch) => {
   return {
-    setToken: token => dispatch(setToken(token))
+    setToken: token => dispatch(setToken(token)),
+    loginUser: user => dispatch(loginUser(user))
   }
 };
 const Login = connect(null, mapDispatchToProps)(LoginForm);

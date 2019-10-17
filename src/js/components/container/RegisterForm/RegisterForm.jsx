@@ -21,7 +21,7 @@ class RegisterForm extends Component {
 
   async handleSubmit(ev) {
     ev.preventDefault();
-    console.log(this.state);
+    console.log("submit", this.state);
     let formData = new FormData();
     formData.append("email", this.state.email);
     formData.append("password", this.state.password);

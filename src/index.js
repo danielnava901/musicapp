@@ -10,7 +10,11 @@ import { ConnectedRouter } from 'connected-react-router'
  */
 const initialState = {
   articles: [],
-  user: {token: null, is_logged: false}
+  user: {
+    token: null, 
+    is_logged: false,
+    info: null
+  }
 };
 const store = configureStore(initialState);
 

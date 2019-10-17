@@ -52,6 +52,7 @@ const RedirectRoute = connect(mapStateToProps, null)(({ to, ...rest }) => {
 
 const Header = connect(mapStateToProps, null)(({user}) => {
   return <div style={{marginTop: 0}}>
+    
     <div className="nav-container">
       <div className="nav-logo">
         <Link to="/login">DNV</Link>
