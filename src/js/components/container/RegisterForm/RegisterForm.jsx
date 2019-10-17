@@ -38,8 +38,14 @@ class RegisterForm extends Component {
     formData.append("password", this.state.password);
     formData.append("username", this.state.username);
 
-    let respi = await post(REGISTER, formData);
-    
+    let resp = await post(REGISTER, formData);
+    if(Number(resp.code) === 200) {
+      this.props.setToken(resp.jwt);
+      this.props.loginUser(resp.user);
+      this.props.history.push("/dashboard");
+    }else {
+      alert(resp.msg);
+    }
   }
 
   handleChange(ev) {
