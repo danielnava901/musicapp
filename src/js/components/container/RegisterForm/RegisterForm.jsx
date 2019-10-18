@@ -4,6 +4,8 @@ import {post} from '../../../utilities/request';
 import {
   LOGIN, REGISTER
 } from '../../../constants/api-routes';
+import { setToken, loginUser } from "../../../actions/index";
+
 
 class RegisterForm extends Component {
   constructor(props) {
@@ -14,20 +16,8 @@ class RegisterForm extends Component {
       username: ''
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  async handleSubmit(ev) {
-    ev.preventDefault();
-    console.log("submit", this.state);
-    let formData = new FormData();
-    formData.append("email", this.state.email);
-    formData.append("password", this.state.password);
-
-    let respi = await post(LOGIN, formData);
-    console.log("resp1:", respi)
   }
 
   async handleRegister(ev) {
@@ -40,9 +30,10 @@ class RegisterForm extends Component {
 
     let resp = await post(REGISTER, formData);
     if(Number(resp.code) === 200) {
+      console.log("Resp: ", resp);
       this.props.setToken(resp.jwt);
       this.props.loginUser(resp.user);
-      this.props.history.push("/dashboard");
+      this.props.history.push("/login");
     }else {
       alert(resp.msg);
     }
@@ -61,7 +52,7 @@ class RegisterForm extends Component {
 
     return (
       <div className="col col-sm-12">
-        <form onSubmit={this.handleSubmit} className="row">
+        <form onSubmit={this.handleRegister} className="row">
           <div className="col col-sm-6 col-sm-offset-3">
             <div className="row">
               <div className="form-control" className="col col-sm-12">
@@ -103,7 +94,7 @@ class RegisterForm extends Component {
             
             </div>
             <div className="row">
-            <button onClick={this.handleRegister} className="button button-success col-sm-12">
+            <button type="submit" className="button button-success col-sm-12">
               Register
             </button>
             </div>
@@ -116,5 +107,12 @@ class RegisterForm extends Component {
   }
 }
 
-const Register = connect(null, null)(RegisterForm);
+const  mapDispatchToProps = (dispatch) => {
+  return {
+    setToken: token => dispatch(setToken(token)),
+    loginUser: user => dispatch(loginUser(user))
+  }
+};
+
+const Register = connect(null, mapDispatchToProps)(RegisterForm);
 export default Register;

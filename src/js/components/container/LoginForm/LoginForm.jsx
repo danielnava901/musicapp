@@ -26,6 +26,7 @@ class LoginForm extends Component {
     formData.append("password", this.state.password);
 
     let resp = await post(LOGIN, formData);
+    console.log(resp);
     if(Number(resp.code) === 200) {
       this.props.setToken(resp.jwt);
       this.props.loginUser(resp.user);
