@@ -1,6 +1,6 @@
 import { 
     ADD_ARTICLE,
-    SET_TOKEN, LOGIN_USER
+    SET_TOKEN, LOGIN_USER, LOGOUT_USER
 } from "../constants/action-types";
 import {combineReducers} from 'redux';
 import {connectRouter} from 'connected-react-router';
@@ -28,7 +28,9 @@ function userReducer(state = userInitialState, action) {
         case SET_TOKEN:
             return Object.assign({}, state, {token: action.token});
         case LOGIN_USER:
-            return Object.assign({}, state, {user: action.user})    
+            return Object.assign({}, state, {user: action.user});
+        case LOGOUT_USER:
+            return Object.assign({}, state, {token: action.token})       
         default:
             return state;    
     }

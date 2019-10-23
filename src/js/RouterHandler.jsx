@@ -1,15 +1,19 @@
 
-import React, {Component} from "react";
+import React from "react";
 import { connect } from "react-redux";
 import {
   HashRouter as Router,
   Switch,
-  Route,
-  Link, Redirect
+  Route
 } from "react-router-dom";
+import Header from "./components/container/Header/Header.jsx";
 import Login from "./components/container/LoginForm/LoginForm.jsx";
 import Register from "./components/container/RegisterForm/RegisterForm.jsx";
 import Dashboard from "./components/container/DashboardMain/DashboardMain.jsx";
+import Hello from "./components/container/Hello/Hello.jsx";
+
+import {PrivateRoute, RedirectRoute} from "./components/container/PrivateRoutes/PrivateRoutes.jsx";
+import { setToken } from "../js/actions/index";
 
 const mapStateToProps = (state) => {
   return {
@@ -17,63 +21,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-const PrivateRoute = connect(mapStateToProps, null)(({ component: Component, user, ...rest }) => {
-  /**
-   * Revisa si existe token
-   */
-  return (
-      <Route exact {...rest} render={props => {
-          if(user.token) {
-              return <Component {...props} />;
-          }else {
-              return <Redirect
-                  to={{
-                      pathname: "/login",
-                      }}
-                  />;
-              }
-          }}
-      />
-  );
-});
-
-const RedirectRoute = connect(mapStateToProps, null)(({ to, ...rest }) => {
-  /**
-   * Revisa si existe token
-   */
-  return (
-      <Redirect
-          to={{
-              pathname: to,
-          }}
-      />
-  );
-});
-
-const Header = connect(mapStateToProps, null)(({user}) => {
-  return <div style={{marginTop: 0}}>
-    
-    <div className="nav-container">
-      <div className="nav-logo">
-        <Link to="/login">DNV</Link>
-      </div>
-      <ul className="nav-links">
-        <li>
-          <Link to="/login">Home</Link>
-        </li>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
-        {
-          user.token ? <li><Link to="/app/user">Mis datos</Link></li> : <li>daniaaaa</li>
-        }
-      </ul>
-    </div>
-  </div>
-})
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setToken: token => dispatch(setToken(token))
+  }
+}
 
 const RouterHandlerMain = (props) => {
-  
+  console.log("porps", props);
   return (
     <div>
       <Header />
@@ -85,6 +40,11 @@ const RouterHandlerMain = (props) => {
           <Route exact path="/register" component={Register} />
           <PrivateRoute exact path="/dashboard" component={Dashboard}/>
           <PrivateRoute exact path="/app/user" component={Dashboard}/>
+          <Route exact path="/logout" component={(pros) => {
+              props.setToken(null); 
+              return <RedirectRoute to="/login"/>}
+          } />
+          <Route exact path="/" component={Hello}/>
         </Switch>
       </Router>
     </div>
@@ -92,5 +52,5 @@ const RouterHandlerMain = (props) => {
 }
 
 
-const RouterHandler = connect(mapStateToProps, null)(RouterHandlerMain);
+const RouterHandler = connect(mapStateToProps, mapDispatchToProps)(RouterHandlerMain);
 export default RouterHandler;
