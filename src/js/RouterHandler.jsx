@@ -10,6 +10,8 @@ import Header from "./components/container/Header/Header.jsx";
 import Login from "./components/container/LoginForm/LoginForm.jsx";
 import Register from "./components/container/RegisterForm/RegisterForm.jsx";
 import Dashboard from "./components/container/DashboardMain/DashboardMain.jsx";
+import MovieReview from "./components/container/MovieReview/MovieReview.jsx";
+
 import Hello from "./components/container/Hello/Hello.jsx";
 
 import {PrivateRoute, RedirectRoute} from "./components/container/PrivateRoutes/PrivateRoutes.jsx";
@@ -28,7 +30,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const RouterHandlerMain = (props) => {
-  console.log("porps", props);
+  
   return (
     <div>
       <Header />
@@ -39,6 +41,7 @@ const RouterHandlerMain = (props) => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+          <PrivateRoute exact path="/dashboard/movie" component={MovieReview}/>
           <PrivateRoute exact path="/app/user" component={Dashboard}/>
           <Route exact path="/logout" component={(pros) => {
               props.setToken(null); 

@@ -14,8 +14,10 @@ export const PrivateRoute = connect(mapStateToProps, null)(({ component: Compone
   /**
    * Revisa si existe token
    */
+  
   return (
       <Route exact {...rest} render={props => {
+        console.log(props);
           if(sessionStorage.getItem("token") && sessionStorage.getItem("token") != "null") {
               return <Component {...props} />;
           }else {

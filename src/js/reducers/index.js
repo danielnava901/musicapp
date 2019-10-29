@@ -1,6 +1,7 @@
 import { 
     ADD_ARTICLE,
-    SET_TOKEN, LOGIN_USER, LOGOUT_USER
+    SET_TOKEN, LOGIN_USER, LOGOUT_USER,
+    SET_MDB_ID_VIEW
 } from "../constants/action-types";
 import {combineReducers} from 'redux';
 import {connectRouter} from 'connected-react-router';
@@ -36,6 +37,18 @@ function userReducer(state = userInitialState, action) {
     }
 }
 
+let uiInitialState = {
+    mdbId: null
+}
+function uiReducer(state = uiInitialState, action) {
+    switch(action.type) {
+        case SET_MDB_ID_VIEW:
+            return Object.assign({}, state, {mdbId: action.mdbId}); 
+        default:
+            return state;    
+    }
+}
+
 /**
  * 
  * @param {*} history 
@@ -43,7 +56,8 @@ function userReducer(state = userInitialState, action) {
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
     articles: articleReducer,
-    user: userReducer
+    user: userReducer,
+    ui: uiReducer
 });
 
 export default createRootReducer;

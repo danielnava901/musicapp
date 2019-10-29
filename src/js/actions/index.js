@@ -6,7 +6,8 @@ import {
     ADD_ARTICLE,
     SET_TOKEN,
     LOGIN_USER,
-    LOGOUT_USER
+    LOGOUT_USER,
+    SET_MDB_ID_VIEW
 } from "../constants/action-types";
 
 export function addArticle(payload) {
@@ -19,8 +20,6 @@ export function setToken(token) {
 };
 
 export function loginUser(user) {
-    console.log("Login user:", user);
-    
     return {
         type: LOGIN_USER,
         user
@@ -28,9 +27,16 @@ export function loginUser(user) {
 }
 
 export function logout(user) {
-    console.log("logout user", user);
     return {
         type: LOGOUT_USER,
         user
+    };
+}
+
+export function setMdbId(mdbId) {
+    sessionStorage.setItem("mdbId", mdbId);
+    return {
+        type: SET_MDB_ID_VIEW,
+        mdbId
     };
 }

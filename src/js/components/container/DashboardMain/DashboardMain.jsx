@@ -6,13 +6,20 @@ import {discoverMovies} from "../../../utilities/request";
 import {POSTER_W342_URL} from "../../../constants/themoviedbApi";
 import Poster from '../../presentational/Poster.jsx';
 
+import {setMdbId} from '../../../actions/index';
+
 const mapStateToProps = (state, ownProps) => {
-  console.log("state", state);
+  
   return {
     token: state.user.token ? state.user.token.token : null
   }
 };
 
+const mapDispatchToProps = (dispatch) => { 
+  return {
+    setMdbId: mdbId => dispatch(setMdbId(mdbId))
+  }
+};
 
 class DashboardMain extends Component {
   constructor(props) {
@@ -25,7 +32,8 @@ class DashboardMain extends Component {
   }
 
   onClickPoster(mdb_id) {
-    console.log("click", mdb_id);
+    this.props.setMdbId(mdb_id);
+    this.props.history.push("/dashboard/movie");
   }
 
   async componentDidMount() {
@@ -69,5 +77,5 @@ class DashboardMain extends Component {
   }
 }
 
-const Dashboard = connect(mapStateToProps, null)(DashboardMain);
+const Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardMain);
 export default Dashboard;
