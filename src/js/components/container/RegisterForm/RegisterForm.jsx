@@ -22,7 +22,7 @@ class RegisterForm extends Component {
 
   async handleRegister(ev) {
     ev.preventDefault();
-    console.log(this.state);
+    
     let formData = new FormData();
     formData.append("email", this.state.email);
     formData.append("password", this.state.password);
@@ -30,7 +30,7 @@ class RegisterForm extends Component {
 
     let resp = await post(REGISTER, formData);
     if(Number(resp.code) === 200) {
-      console.log("Resp: ", resp);
+    
       this.props.setToken(resp.jwt);
       this.props.loginUser(resp.user);
       this.props.history.push("/login");

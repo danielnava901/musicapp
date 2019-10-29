@@ -18,7 +18,6 @@ class MovieReviewContainer extends Component {
     }
 
     this.setState({info: movieInfo});
-  
   }
 
   render() {
@@ -39,19 +38,28 @@ class MovieReviewContainer extends Component {
                   boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)"
                 }}/>
               </div>
-              <div className="col-sm-4" style={{
-                color: "yellow", 
-                fontSize: "1.1rem", 
-                maxHeight: "400px", overflowY: "auto",
-                backgroundColor: "rgba(4,4,4, 0.4)",
-                padding: "20px"
-                }} >
-                <p>
-                  {
-                    this.state.info.overview
-                  }
-                </p>
-              </div>    
+              <div className="col-sm-6">
+                <div className="row">
+                  <div className="col-sm-2">like</div>
+                  <div className="col-sm-2">star</div>
+                  <div className="col-sm-2">mark</div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-12" style={{
+                    color: "yellow", 
+                    fontSize: "1.1rem", 
+                    maxHeight: "400px", overflowY: "auto",
+                    backgroundColor: "rgba(4,4,4, 0.4)",
+                    padding: "20px"
+                    }} >
+                      <p>
+                        {
+                          this.state.info.overview
+                        }
+                      </p>
+                  </div>
+                </div>
+              </div>      
             </div>  
           </div> : null
         }
